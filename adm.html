@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Administração</title>
+	<!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="css/materialize.min.css">
+       
+      <!--Let browser know website is optimized for mobile-->
+      <meta charset="utf-8">	
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <!--<script src="https://code.jquery.com/jquery-3.1.0.js"></script>-->
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+      <script src="js/materialize.min.js"></script>
+
+</head>
+
+<style type="text/css">
+.bg{
+	background-image: linear-gradient(to top left,#FF69B4,#00CED1);
+}
+nav{
+	background-image: linear-gradient(to top right,#35b0a9,#8a4592); 
+	padding-left: 300px;
+}
+.content{
+	padding-left: 300px;
+	height:100%;
+}
+.card-bg{
+	background: rgba(0,0,0,0);
+}
+@media only screen and (max-width: 992px){
+	.content,nav{
+		padding-left: 0;
+	}
+}
+
+/*
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:before,
+[type="radio"].with-gap:checked+span:after{
+  border=2px solid #90a76b;	
+}
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:after{
+  background-color=#6f00ff;
+}
+*/
+</style>
+
+
+<script type="text/javascript">
+   
+
+
+	$(document).ready(function(){
+		$('.sidenav').sidenav();
+/*
+	var cont1=document.getElementById("mych1").onchange=function(){
+    
+    let a= document.getElementById("mych1").checked;
+    if(a){
+     $("#mycard1").show();
+     console.log("Check");
+     }
+    else{
+      $("#mycard1").hide();
+      console.log("No Check");
+     }
+     }//function check
+*/
+   var s;
+   var alat;
+   var ades;
+   var npag;
+   var tmed;
+   var pfat;
+   var pdes;
+   var ptme;
+   var ppag;
+   var totcu;
+   var pcus;
+   var pernpag;
+   var dianpag;
+   var pernfat;
+   var diacc;
+   var nacc;
+   $.ajax({
+        url : "models/raiox106.php?par=123",
+        //url:"http://www.pietro1701.com/ajax/models/raiox.php?par=123",
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+            document.getElementById("p11").innerHTML="Faturamento";
+            document.getElementById("p22").innerHTML="Alunos Ativos";
+            document.getElementById("p33").innerHTML="Alunos Desistentes";
+            document.getElementById("p44").innerHTML="Ticket Medio";
+            document.getElementById("p55").innerHTML="Pagantes";
+            document.getElementById("p66").innerHTML="Custos";
+            document.getElementById("p1").innerHTML=data.fatt;
+            document.getElementById("p2").innerHTML=data.alat;
+            document.getElementById("p3").innerHTML=data.ades;
+            document.getElementById("p4").innerHTML=data.tmed;
+            document.getElementById("p5").innerHTML=data.npag;
+            document.getElementById("p6").innerHTML=data.totcu;
+            document.getElementById("p1111").innerHTML=data.pfat+"%";
+            document.getElementById("p3333").innerHTML=data.pdes+"%";
+            document.getElementById("p4444").innerHTML=data.ptme+"%"; 
+            document.getElementById("p5555").innerHTML=data.ppag+"%";	
+            document.getElementById("p6666").innerHTML=data.pcus+"%"; 
+            
+           
+            
+           if (data.pfat>=0){
+             document.getElementById("p111").style['color']="#228B22";
+             document.getElementById("p1111").style['color']="#228B22";	
+             document.getElementById("p111").innerHTML="keyboard_arrow_up";
+             }
+           else{
+             document.getElementById("p111").style['color']="red";
+             document.getElementById("p1111").style['color']="red";	
+             document.getElementById("p111").innerHTML="keyboard_arrow_down";
+             }
+
+
+           if (data.pdes>=0){
+             document.getElementById("p333").style['color']="#228B22";
+             document.getElementById("p3333").style['color']="#228B22";	
+             document.getElementById("p333").innerHTML="keyboard_arrow_up";
+             }
+           else{
+             document.getElementById("p333").style['color']="red";
+             document.getElementById("p3333").style['color']="red";	
+             document.getElementById("p333").innerHTML="keyboard_arrow_down";
+             }
+
+          if (data.ptme>=0){
+             document.getElementById("p444").style['color']="#228B22";
+             document.getElementById("p4444").style['color']="#228B22";	
+             document.getElementById("p444").innerHTML="keyboard_arrow_up";
+             }
+           else{
+             document.getElementById("p444").style['color']="red";
+             document.getElementById("p4444").style['color']="red";	
+             document.getElementById("p444").innerHTML="keyboard_arrow_down";
+             }
+
+       
+           if (data.ppag>=0){
+             document.getElementById("p555").style['color']="#228B22";
+             document.getElementById("p5555").style['color']="#228B22"; 
+             document.getElementById("p555").innerHTML="keyboard_arrow_up";
+             }
+           else{
+             document.getElementById("p555").style['color']="red";
+             document.getElementById("p5555").style['color']="red"; 
+             document.getElementById("p555").innerHTML="keyboard_arrow_down";
+             }
+
+           if (data.pcus>=0){
+             document.getElementById("p666").style['color']="#228B22";
+             document.getElementById("p6666").style['color']="#228B22"; 
+             document.getElementById("p666").innerHTML="keyboard_arrow_up";
+             }
+           else{
+             document.getElementById("p666").style['color']="red";
+             document.getElementById("p6666").style['color']="red"; 
+             document.getElementById("p666").innerHTML="keyboard_arrow_down";
+             }
+
+            pernfat=data.pernfat;
+            pernpag=data.pernpag;
+            dianpag=data.dianpag;
+            nacc=data.nacc;
+            diacc=data.diacc;
+         
+
+
+      var chr=document.getElementById("myChart").getContext("2d");      
+      var myChart=new Chart(chr,{
+      type:'bar',
+      data:{
+        //labels:['janeiro','fevereiro','marco','abril','maio','junho','julho'],
+        labels:dianpag,
+        datasets:[{
+          label:'Faturamento',
+          //data:[5100,4250,4090,3400,6150,5450,3107],
+          data:pernfat,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+        }]
+      },
+      options:{
+        legend:{
+          labels:{
+            fontColor:'#fff',
+          }
+
+        }
+      }
+    });   
+
+        var chr2=document.getElementById("myChart2").getContext("2d");
+        var myChart2=new Chart(chr2,{
+          type:'line',
+          data:{
+          //labels:['Segunda','Terca','Quarta','Quinta','Sexta'],
+          labels:dianpag,
+          datasets:[{
+          label:'Pagantes',
+          //data:[25,17,22,28,13],
+          data:pernpag,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+          }]
+          },
+          options:{
+          legend:{
+          labels:{
+            fontColor:'#fff',
+             }
+            }
+           }
+         }); 
+
+    
+
+  var chr3=document.getElementById("myChart3").getContext("2d");
+    
+    var myChart3=new Chart(chr3,{
+      type:'bar',
+      data:{
+        //labels:['musculacao','ginastica','spinning','funcional','zumba','boxe','natacao'],
+        labels:diacc,
+        datasets:[{
+          label:'Num. Acessos',
+          //data:[85.00,90.00,180.00,110.00,75.00,80.00,120.00],
+          data:nacc,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+        }]
+      },
+      options:{
+        legend:{
+          labels:{
+            fontColor:'#fff',
+          }
+
+        }
+      }
+    });
+
+            s =data.fatt;
+            alat =data.alat;
+            ades =data.ades;
+            npag=data.npag;
+            tmed=data.tmed;
+            pfat=data.pfat;
+            pdes=data.pdes;
+            ptme=data.ptme;
+            ppag=data.ppag;
+            totcu=data.totcu;
+            pcus=data.pcus;
+            
+
+        },
+        error: function(){
+            console.log("Erro na requisição");
+        }  
+    });
+
+  
+
+    var c11=document.getElementById("myrd1").onchange=()=>{
+    
+   // console.log(s);
+    
+    
+    
+    document.getElementById("p11").innerHTML="Faturamento";
+    document.getElementById("p22").innerHTML="Alunos Ativos";
+    document.getElementById("p33").innerHTML="Alunos Desistentes";
+    document.getElementById("p44").innerHTML="Ticket Medio";
+    document.getElementById("p55").innerHTML="Pagantes";
+    document.getElementById("p66").innerHTML="Custos";
+    document.getElementById("p1").innerHTML=s;
+    document.getElementById("p2").innerHTML=alat;
+    document.getElementById("p3").innerHTML=ades;
+    document.getElementById("p4").innerHTML=tmed;
+    document.getElementById("p5").innerHTML=npag;
+    document.getElementById("p6").innerHTML=totcu;
+    document.getElementById("p1111").innerHTML=pfat+"%";
+    document.getElementById("p3333").innerHTML=pdes+"%";
+    document.getElementById("p4444").innerHTML=ptme+"%"; 
+    document.getElementById("p5555").innerHTML=ppag+"%";	
+    document.getElementById("p6666").innerHTML=pcus+"%"; 
+
+    //document.getElementById("mycard5").style.display = 'block';
+    
+
+     if (pfat>=0){
+       document.getElementById("p111").style['color']="#228B22";
+       document.getElementById("p1111").style['color']="#228B22";	
+       document.getElementById("p111").innerHTML="keyboard_arrow_up";
+       }
+     else{
+       document.getElementById("p111").style['color']="red";
+       document.getElementById("p1111").style['color']="red";	
+       document.getElementById("p111").innerHTML="keyboard_arrow_down";
+       }
+
+     if (pdes>=0){
+       document.getElementById("p333").style['color']="#228B22";
+       document.getElementById("p3333").style['color']="#228B22";	
+       document.getElementById("p333").innerHTML="keyboard_arrow_up";
+       }
+     else{
+       document.getElementById("p333").style['color']="red";
+       document.getElementById("p3333").style['color']="red";	
+       document.getElementById("p333").innerHTML="keyboard_arrow_down";
+       }  
+
+     if (ptme>=0){
+       document.getElementById("p444").style['color']="#228B22";
+       document.getElementById("p4444").style['color']="#228B22"; 
+       document.getElementById("p444").innerHTML="keyboard_arrow_up";
+       }
+     else{
+       document.getElementById("p444").style['color']="red";
+       document.getElementById("p4444").style['color']="red"; 
+       document.getElementById("p444").innerHTML="keyboard_arrow_down";
+       }  
+
+     if (ppag>=0){
+       document.getElementById("p555").style['color']="#228B22";
+       document.getElementById("p5555").style['color']="#228B22";	
+       document.getElementById("p555").innerHTML="keyboard_arrow_up";
+       }
+     else{
+       document.getElementById("p555").style['color']="red";
+       document.getElementById("p5555").style['color']="red";	
+       document.getElementById("p555").innerHTML="keyboard_arrow_down";
+       }  
+
+   $("#mycard5").show();
+    
+
+    /*if(a){
+     $("#mycard1").show();
+     console.log("Check");
+     }
+    else{
+      $("#mycard1").hide();
+      console.log("No Check");
+     }*/
+
+     }//function check
+
+
+
+  var c12=document.getElementById("myrd2").onchange=()=>{
+    
+   // console.log(s);
+
+
+    //let a= document.getElementById("myrd1").checked;
+    document.getElementById("m1").innerHTML="Financeiro";
+    document.getElementById("p11").innerHTML="Custo";
+    document.getElementById("p1").innerHTML="Orca";
+    $("#mycard5").hide();
+
+
+    /*if(a){
+     $("#mycard1").show();
+     console.log("Check");
+     }
+    else{
+      $("#mycard1").hide();
+      console.log("No Check");
+     }*/
+
+     }//function check
+
+
+
+
+
+
+     }//function ready
+
+	);// document.ready
+	
+</script>
+
+
+<body>
+	<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo center">Admin</a>
+			<a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>		
+		</div>
+	</nav>
+	</div>
+	
+	<ul class="sidenav sidenav-fixed bg" id="slide-out">
+		<li>
+			<div class="user-view">
+				<div class="background">
+					<img src="back.jpg" width="100%">
+				</div>
+				<a href="#"><img src="pietro.jpg" class="circle"></a>
+				<a href="#" class="white-text name">Pietro Valente</a>
+				<a href="#" class="white-text email">Zap: (085) 991339186</a>
+			</div>	
+		</li>
+		<!--<li><a href="" class="white-text"><i class="material-icons">home</i>Principal</a></li>-->
+		<li><a href="" class="white-text"><i class="material-icons">mail</i>pierre.1717@hotmail.com</a></li>
+	
+<div class="container">
+<!--
+    <form action="#">
+    <p>
+      <label>
+        <input type="checkbox" id="mych1" checked="checked"  class="filled-in" />
+        <span class="yellow-text">Faturamento</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" checked="checked" class="filled-in"/>
+        <span class="yellow-text">Alunos Ativos</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input type="checkbox" checked="checked" class="filled-in"/>
+        <span class="yellow-text">Taxa Desistencia</span>
+      </label>
+    </p>
+
+    <p>
+      <label>
+        <input type="checkbox" class="filled-in" checked="checked" />
+        <span class="yellow-text">Ticket Medio</span>
+      </label>
+    </p>
+
+
+   </form>
+-->
+ <br>
+ <li><a href="adm.html" class="yellow-text"><i class="material-icons">home</i>Principal</a></li>
+ <li><a href="adm2002.html" class="yellow-text"><i class="material-icons">attach_money</i>Financeiro</a></li>
+ <li><a href="adm3001.html" class="yellow-text"><i class="material-icons">build</i>Operacional</a></li>
+ <li><a href="adm4001.html" class="yellow-text"><i class="material-icons">stars</i>AI</a></li>
+ <br>
+ <li><a href="index.php" class="yellow-text"><i class="material-icons">exit_to_app</i>Sair</a></li>
+
+<!--
+   <form action="#">
+    <p>
+      <label>
+        <input class="with-gap" name="group1" id="myrd1" type="radio" checked />
+        <span class="yellow-text">Principal</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input class="with-gap" name="group1" id="myrd2" type="radio" />
+        <span class="yellow-text">Financeiro</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input class="with-gap" name="group1" id="myrd3" type="radio"  />
+        <span class="yellow-text">Operacional</span>
+      </label>
+    </p>
+    <p>
+      <label>
+        <input class="with-gap" name="group1" id="myrd4" type="radio" />
+        <span class="yellow-text">AI</span>
+      </label>
+    </p>
+  </form>-->
+         
+
+  </div>  
+ 
+
+
+
+
+
+
+	</ul>
+
+
+	<div class="content bg">
+		<div class="container">
+		<div class="row">
+			
+			<div class="col s12 center">
+				<h1 class="green-text text-darken-4" id="m1">Principal</h1>
+			</div>
+			
+			<div class="col s12  m6 l3">
+				<div id="mycard1" class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p11" class="yellow-text">Faturamento</p>
+						<h5 id="p1">R$ 0,00</h5>
+						<!--<i id="p111" class="material-icons small green-text text-darken-3">keyboard_arrow_up</i>-->
+            <i id="p111" class="material-icons small">keyboard_arrow_up</i><br>
+						<!--<b id="p1111" class="green-text text-darken-3">0%</b>-->
+						<b id="p1111">0%</b>
+					</div>
+				</div>
+			</div>
+			<div class="col s12 l3 m6">
+				<div class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p22" class="yellow-text">Alunos Ativos</p>
+						<h5 id="p2">0</h5>
+						</div>
+				</div>
+			</div>
+
+			<div class="col s12 l3 m6">
+				<div class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p33" class="yellow-text">Alunos Desistentes</p>
+						<h5 id="p3">0</h5>
+						<i id="p333" class="material-icons small">keyboard_arrow_up</i><br>
+						<b id="p3333">0%</b>
+					</div>
+				</div>
+			</div>
+
+			<div class="col s12 m6 l3">
+				<div class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p44" class="yellow-text" >Ticket Medio</p>
+						<h5 id="p4">R$ 0,00</h5>
+						<i id="p444" class="material-icons small">keyboard_arrow_up</i><br>
+						<b id="p4444">0%</b>
+					</div>
+				</div>
+			</div>
+
+           <div class="col s12 m6 l6">
+				<div id="mycard5" class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p55" class="yellow-text">Pagantes</p>
+						<h5 id="p5">0</h5>
+						<i id="p555" class="material-icons small">keyboard_arrow_up</i><br>
+						<b id="p5555">%10</b>
+					</div>
+				</div>
+			</div> 
+
+			<div class="col s12 m6 l6">
+				<div id="mycard6" class="card card-bg white-text">
+					<div class="card-content center">
+						<p id="p66" class="yellow-text">Custos</p>
+						<h5 id="p6">R$ 0,00</h5>
+						<i id="p666" class="material-icons small">keyboard_arrow_up</i><br>
+						<b id="p6666">%10</b>
+					</div>
+				</div>
+			</div> 
+		
+
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart2"></canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart3"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	
+
+ 		
+</body>
+</html>

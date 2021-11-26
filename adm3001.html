@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Administração</title>
+	<!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="css/materialize.min.css">
+       
+      <!--Let browser know website is optimized for mobile-->
+      <meta charset="utf-8">	
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <!--<script src="https://code.jquery.com/jquery-3.1.0.js"></script>-->
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+      <script src="js/materialize.min.js"></script>
+
+</head>
+
+<style type="text/css">
+.bg{
+	background-image: linear-gradient(to top left,#FF69B4,#00CED1);
+}
+nav{
+	background-image: linear-gradient(to top right,#35b0a9,#8a4592); 
+	padding-left: 300px;
+}
+.content{
+	padding-left: 300px;
+	height:100%;
+}
+.card-bg{
+	background: rgba(0,0,0,0);
+}
+@media only screen and (max-width: 992px){
+	.content,nav{
+		padding-left: 0;
+	}
+}
+
+/*
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:before,
+[type="radio"].with-gap:checked+span:after{
+  border=2px solid #90a76b;	
+}
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:after{
+  background-color=#6f00ff;
+}
+*/
+</style>
+
+
+<script type="text/javascript">
+   
+
+
+	$(document).ready(function(){
+		$('.sidenav').sidenav();
+/*
+	var cont1=document.getElementById("mych1").onchange=function(){
+    
+    let a= document.getElementById("mych1").checked;
+    if(a){
+     $("#mycard1").show();
+     console.log("Check");
+     }
+    else{
+      $("#mycard1").hide();
+      console.log("No Check");
+     }
+     }//function check
+*/
+   
+
+   $.ajax({
+        url : "models/raiox301.php",
+        //url:"http://www.pietro1701.com/ajax/models/raiox.php?par=123",
+        dataType: "json",
+        success: function(data){
+            console.log(data);
+
+
+            var nomeope=[];
+            var fattope=[];
+            var matmes;
+            var retmes;
+            var permes;
+
+            for(let i=0;i<data.nope;i++){
+               nomeope[i]=data.res[i][0];
+               fattope[i]=data.res[i][1];
+            }
+
+            permes=data.permes; 
+            matmes=data.matmes; 
+
+      var chr=document.getElementById("myChart").getContext("2d");      
+      var myChart=new Chart(chr,{
+      type:'bar',
+      data:{
+        //labels:['janeiro','fevereiro','marco','abril','maio','junho','julho'],
+        labels:nomeope,
+        datasets:[{
+          label:'Faturamento Operadores',
+          //data:[5100,4250,4090,3400,6150,5450,3107],
+          data:fattope,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+        }]
+      },
+      options:{
+        legend:{
+          labels:{
+            fontColor:'#fff',
+          }
+
+        }
+      }
+    });   
+
+    
+        var chr2=document.getElementById("myChart2").getContext("2d");
+        var myChart2=new Chart(chr2,{
+          type:'line',
+          data:{
+          //labels:['Segunda','Terca','Quarta','Quinta','Sexta'],
+          labels:data.permes,
+          datasets:[{
+          label:'Historico Matriculas',
+          //data:[25,17,22,28,13],
+          data: data.matmes,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+          }]
+          },
+          options:{
+          legend:{
+          labels:{
+            fontColor:'#fff',
+             }
+            }
+           }
+         }); 
+            
+          
+      var chr3=document.getElementById("myChart3").getContext("2d");      
+      var myChart3=new Chart(chr3,{
+      type:'bar',
+      data:{
+        labels:data.permes,
+        datasets:[{
+          label:'Historico Retornos',
+          //data:[5100,4250,4090,3400,6150,5450,3107],
+          data:data.retmes,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+        }]
+      },
+      options:{
+        legend:{
+          labels:{
+            fontColor:'#fff',
+          }
+
+        }
+      }
+    });     
+
+    
+   var chr4=document.getElementById("myChart4").getContext("2d");
+        var myChart4=new Chart(chr4,{
+          type:'line',
+          data:{
+          //labels:['Segunda','Terca','Quarta','Quinta','Sexta'],
+          labels:data.permes,
+          datasets:[{
+          label:'Historico Desistencias',
+          //data:[25,17,22,28,13],
+          data: data.aludes,
+          backgroundColor:'rgba(0,0,0,0)',
+          borderColor:'#ff0',
+          borderWidth:1,
+          }]
+          },
+          options:{
+          legend:{
+          labels:{
+            fontColor:'#fff',
+             }
+            }
+           }
+         }); 
+
+          
+
+        },
+        error: function(){
+            console.log("Erro na requisição");
+        }  
+    });
+
+  
+
+
+
+
+
+
+     }//function ready
+
+	);// document.ready
+	
+</script>
+
+
+<body>
+	<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo center">Admin</a>
+			<a href="" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>		
+		</div>
+	</nav>
+	</div>
+	
+	<ul class="sidenav sidenav-fixed bg" id="slide-out">
+		<li>
+			<div class="user-view">
+				<div class="background">
+					<img src="back.jpg" width="100%">
+				</div>
+				<a href="#"><img src="pietro.jpg" class="circle"></a>
+				<a href="#" class="white-text name">Pietro Valente</a>
+				<a href="#" class="white-text email">Zap: (085) 991339186</a>
+			</div>	
+		</li>
+		<!--<li><a href="" class="white-text"><i class="material-icons">home</i>Principal</a></li>-->
+		<li><a href="" class="white-text"><i class="material-icons">mail</i>pierre.1717@hotmail.com</a></li>
+	
+<div class="container">
+
+ <br>
+ <li><a href="adm.html" class="yellow-text"><i class="material-icons">home</i>Principal</a></li>
+ <li><a href="adm2002.html" class="yellow-text"><i class="material-icons">attach_money</i>Financeiro</a></li>
+ <li><a href="adm3001.html" class="yellow-text"><i class="material-icons">build</i>Operacional</a></li>
+ <li><a href="adm4001.html" class="yellow-text"><i class="material-icons">stars</i>AI</a></li>
+ <br>
+ <li><a href="index.php" class="yellow-text"><i class="material-icons">exit_to_app</i>Sair</a></li>
+
+
+  </div>  
+ 
+	</ul>
+
+
+
+	<div class="content bg">
+		<div class="container">
+		<div class="row">
+			
+			<div class="col s12 center">
+				<h1 class="green-text text-darken-4" id="m1">Operacional</h1>
+			</div>
+			
+	
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart2"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div class="col l12 m6 s12">
+				<div class="card card-bg">
+					<div class="card-content">
+						<canvas id="myChart3"></canvas>
+					</div>
+				</div>
+			</div>
+
+      <div class="col l12 m6 s12">
+        <div class="card card-bg">
+          <div class="card-content">
+            <canvas id="myChart4"></canvas>
+          </div>
+        </div>
+      </div>
+
+		</div>
+	</div>
+	</div>
+
+	
+
+ 		
+</body>
+</html>
