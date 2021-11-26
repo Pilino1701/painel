@@ -4,7 +4,7 @@ git add --all
 pause
 git commit -m%1 
 pause
-git add remote origin %2
+git remote add origin https://github.com/Pilino1701/painel.git
 pause
 git config --global user.name "Pilino1701"
 pause  
